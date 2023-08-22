@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const baseURL = 'https://fakestoreapi.com/products?limit=5';
+const baseURL = 'https://fakestoreapi.com/products';
 // Créez un objet pour stocker les images de chaque catégorie
 const categoryImages = {
   "men's clothing": 'src/assets/images/mode_homme.jpg',
@@ -19,8 +19,15 @@ export function Home() {
     //  exécuté au chargement du composant
     axios.get(baseURL)
       .then((response) => {
-        setPosts(response.data);//Met à jour les données avec celles de l'API
-        setLoading(false);// Indique que le chargement est terminé
+        // setPosts(response.data);//Met à jour les données avec celles de l'API
+        // setLoading(false);// Indique que le chargement est terminé
+         // Triez les produits par notation (du plus élevé au plus bas)
+            const sortedProducts = response.data
+  .sort((a, b) => b.rating.rate - a.rating.rate)
+  .slice(0, 5); // Limite la liste triée aux 5 premiers éléments
+
+         // Mettez à jour les données avec les produits triés
+         setPosts(sortedProducts);
       })
       .catch((error) => {
         console.error("Une erreur s'est produite lors du chargement des données :", error);
@@ -49,8 +56,9 @@ export function Home() {
           <h2>Produits Mieux Notés</h2>
           <ul className="flex">
             {posts.map((post) => (
-              <li key={post.id}>{post.title}
+              <li key={post.id}>
               <img src={post.image} alt={post.title} className="w-1/2"/>
+              {post.title}
               </li>
             ))}
           </ul>

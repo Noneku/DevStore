@@ -9,9 +9,11 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
+const SignUpForm = () => {
+
 const validationSchema = Yup.object().shape({
   nom: Yup.string()
-    .min(4, "Veuillez entrer un nom contenant plus de 4 caractères")
+    .min(1, "Veuillez entrer un nom contenant plus de 1 caractères")
     .required("Le nom est requis"),
 
   prenom: Yup.string()
@@ -29,8 +31,26 @@ const validationSchema = Yup.object().shape({
   password: Yup.string()
     .min(5, "Veuillez entrer un mot de passe contenant plus de 5 caractères")
     .required("Le mot de passe est requis"),
-});
 
+    ville: Yup.string()
+    .min(1, "Veuillez entrer une ville correct")
+    .required("La ville est requise"),
+
+    rue: Yup.string()
+    .min(1, "Veuillez entrer une rue correct")
+    .required("La rue est requise"),
+
+    numero: Yup.number()
+    .min(1, "Veuillez entrer un numero d'adresse correct")
+    .required("Votre numero d'adresse est requis"),
+
+    codePostal: Yup.string()
+    .min(1, "Veuillez entrer un code postal correct")
+    .required("Le code postal est requis"),
+
+    agreeTerms: Yup.bool()
+    .oneOf([true],'Vous devez accepter les conditions générals'),
+});
 
 const initialValues = {
   nom: '',
@@ -38,14 +58,16 @@ const initialValues = {
   pseudo: '',
   email: '',
   password: '',
-  agreeTerms: false
+  ville: '',
+  rue: '',
+  numero: '',
+  codePostal: '',
+  agreeTerms: false,
 };
 
-const SignUpForm = () => {
-
-  const handleSubmit = () => {
-    alert('je fonctionne !');
-  }
+const handleSubmit = () => {
+  alert('je fonctionne !');
+}
 
   return (
     <Card color="transparent" shadow={false}>
@@ -97,27 +119,64 @@ const SignUpForm = () => {
                 )}
               </Field>
               <ErrorMessage name="password" component="div" className="text-red-500" />
+
+              {/* ADRESSE */}
+              <div className="flex-col">
+                <div className="flex space-x-4">
+                  <Field type="text" name="ville">
+                  {({ field }) => (
+                      <Input {...field} type="text" size="lg" label="Ville" className="input"/>
+                    )}
+                  </Field>
+                  <ErrorMessage name="ville" component="div" className="text-red-500" />
+                  <Field type="text" name="rue">
+                  {({ field }) => (
+                      <Input {...field} type="text" size="lg" label="Rue" className="input" />
+                    )}
+                  </Field>
+                  <ErrorMessage name="rue" component="div" className="text-red-500" />
+                </div>
+
+                <div className="flex mt-5 space-x-4">
+                  <Field type="text" name="numero">
+                  {({ field }) => (
+                      <Input {...field} type="text" size="lg" label="Numero °" className="input" />
+                    )}
+                  </Field>
+                  <ErrorMessage name="numero" component="div" className="text-red-500" />
+                  <Field type="text" name="codePostal">
+                  {({ field }) => (
+                      <Input {...field} type="text" size="lg" label="Code Postal" className="input" />
+                    )}
+                  </Field>
+                  <ErrorMessage name="codePostal" component="div" className="text-red-500" />
+                </div>
+              </div>
             </div>
             <div className="mb-4">
-              <Checkbox
-                label={
-                  <Typography
-                    variant="small"
-                    color="gray"
-                    className="flex items-center font-normal"
-                  >
-                    J'accepte les
-                    <a
-                      href="#"
-                      className="font-medium transition-colors hover:text-gray-900"
-                    >
-                      &nbsp;Conditions Générales
-                    </a>
-                  </Typography>
-                }
-                containerProps={{ className: "-ml-2.5" }}
-                name="agreeTerms"
-              />
+              <Field type="checkbox" name="agreeTerms">
+                {({ field }) => (
+                  <Checkbox {...field}
+                    label={
+                      <Typography
+                        variant="small"
+                        color="gray"
+                        className="flex items-center font-normal"
+                      >
+                        J'accepte les
+                        <a
+                          href="#"
+                          className="font-medium transition-colors hover:text-gray-900"
+                        >
+                          &nbsp;Conditions Générales
+                        </a>
+                      </Typography>
+                  }
+                  containerProps={{ className: "-ml-2.5" }}
+                  name="agreeTerms"
+                />
+              )} 
+              </Field>             
               <ErrorMessage name="agreeTerms" component="div" className="text-red-500" />
             </div>
             <Button type="submit" className="mt-6" fullWidth disabled={isSubmitting}>

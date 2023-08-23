@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Header /> 
     <Home />
-    <SignUpForm />
+    {/* <SignUpForm /> */}
     <Footer />
   </React.StrictMode>,
 )

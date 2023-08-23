@@ -196,6 +196,7 @@ const navListItems = [
   {
     label: "Account",
     icon: UserCircleIcon,
+    route: "/profile"
   }
 ];
 
@@ -203,8 +204,9 @@ function NavList() {
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       <NavListMenu />
-      {navListItems.map(({ label, icon }, key) => (
-        <Typography
+      {navListItems.map(({ label, icon, route }, key) => (
+        <NavLink to={route}>
+          <Typography
           key={label}
           as="a"
           href="#"
@@ -216,7 +218,9 @@ function NavList() {
             {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
             {label}
           </MenuItem>
-        </Typography>
+          </Typography>
+        </NavLink>
+        
       ))}
     </ul>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import * as Yup from 'yup';
 import {
@@ -8,6 +8,8 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const SignUpForm = () => {
 
@@ -64,9 +66,20 @@ const initialValues = {
   codePostal: '',
   agreeTerms: false,
 };
+// AXIOS POST
 
-const handleSubmit = () => {
-  alert('je fonctionne !');
+const handleSubmit = (values) => {
+
+  console.table(values);
+
+  const userJson = JSON.stringify(values);
+
+  axios
+      .put(``, { userJson })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+  });
 }
 
   return (
@@ -184,9 +197,10 @@ const handleSubmit = () => {
             </Button>
             <Typography color="gray" className="mt-4 text-center font-normal">
               Vous avez déjà un compte ?{" "}
-              <a href="#" className="font-medium text-gray-900">
+              <Link to="/signIn">Se connecter</Link>
+              {/* <a href="" className="font-medium text-gray-900">
                 Se connecter
-              </a>
+              </a> */}
             </Typography>
           </Form>
         )}

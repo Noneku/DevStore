@@ -1,7 +1,10 @@
 import React from "react";
+import { useState, useEffect} from "react";
+// import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   Navbar,
-  MobileNav,
+  Collapse,
   Typography,
   Button,
   Menu,
@@ -217,11 +220,16 @@ function NavList() {
     </ul>
   );
 }
+// const baseURL = "https://fakestoreapi.com/products/category";
 
 export function Header() {
   const [isNavOpen, setIsNavOpen] = React.useState(false);
-
+  const [searchValue,setSearchValue] = useState("");
+  const [products,setProducts] = useState([]);
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
+  // const Navigate=useNavigate()
+  const [posts, setPosts] = useState([]); // État pour stocker les données de l'API
+  const [loading, setLoading] = useState(true); //État pour gérer le chargement des données
 
   React.useEffect(() => {
     window.addEventListener(
@@ -229,6 +237,38 @@ export function Header() {
       () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
   }, []);
+
+
+  const handleChange = (e) =>{
+    console.log(e.target.value);
+  
+    setSearchValue(e.target.value)
+
+  }
+  //  const handleCategoryClick=(category)=>{
+  //   Navigate()
+  //   setSearchValue("")
+  //  }
+  useEffect(() => {
+    if (searchValue !== "") {
+        axios.get('https://fakestoreapi.com/products')
+            .then((response) => {
+                if (response.data) {
+                  setProducts(response.data);
+                  console.log(response.data)
+                  console.log(searchValue);
+                }
+            })
+            .catch((error) => console.log(error));
+    } else {
+        setProducts([]);
+    }
+  }, [searchValue]);
+  //     if (loading) {
+  //   return <div>Chargement en cours...</div>;
+  // }
+  const filteredCategories = products?.filter((product) =>
+  product.title.toLowerCase().includes(searchValue.toLowerCase()));
 
   return (
     <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6 bg-orange-500">
@@ -241,14 +281,29 @@ export function Header() {
           DevStore
         </Typography>
         <div className="relative flex w-full gap-2 md:w-max">
-        <Input
+        <Input value={searchValue} onChange={handleChange}
           type="search"
           label="Type here..."
           className="pr-20"
           containerProps={{
             className: "min-w-[288px]",
           }}
+       
         />
+           {searchValue !== '' && (
+            <ul className="suggestions absolute top-12 bg-gray-100">
+              {console.log(filteredCategories)}
+            {filteredCategories
+            .map((product, index) => (
+              <li key={index} 
+              // onClick={() => handleCategoryClick(product)}
+              >
+                {product.title}
+              </li>
+            ))}
+
+          </ul>
+        )}
         <Button size="sm" className="!absolute right-1 top-1 rounded">
           Search
         </Button>
@@ -268,9 +323,9 @@ export function Header() {
         <ProfileMenu />
       </div>
      
-      <MobileNav open={isNavOpen} className="overflow-scroll">
+      <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />
-      </MobileNav>
+      </Collapse>
     </Navbar>
   );
 }

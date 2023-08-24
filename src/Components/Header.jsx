@@ -238,12 +238,19 @@ export function Header() {
   // const Navigate=useNavigate()
   const [posts, setPosts] = useState([]); // État pour stocker les données de l'API
   const [loading, setLoading] = useState(true); //État pour gérer le chargement des données
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   React.useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
+
+    const token = localStorage.getItem('authToken');
+
+    if(token){
+      setIsAuthenticated(true);
+    }
+
   }, []);
 
 
@@ -281,13 +288,25 @@ export function Header() {
   return (
     <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6 bg-orange-500">
       <div className="relative mx-auto flex items-center text-blue-gray-900">
-        <Typography
+        { isAuthenticated ? (
+          <Typography
+              href="/"
+              as="a"
+              className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
+            >
+            Je suis connecté
+          </Typography>
+        ) : (
+          <Typography
+          href="/"
           as="a"
-          href="#"
           className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
-        >
-          DevStore
-        </Typography>
+            >
+            Pas connecté
+          </Typography> 
+        )};
+          
+
         <div className="relative flex w-full gap-2 md:w-max">
         <Input value={searchValue} onChange={handleChange}
           type="search"

@@ -122,7 +122,7 @@ const navListMenuItems = [
     title: "Se connecter",
     description:
       "Je me connecte ici.",
-      route: "/connexion"
+      route: "/login"
   },
   {
     title: "Inscription",

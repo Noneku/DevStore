@@ -8,6 +8,7 @@ import {Header} from './Components/Header.jsx'
 import { Home } from './Components/Home.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Profile from './components/Profile.jsx'
+import Login from './components/Login'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
@@ -15,7 +16,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route exact path="/" element={<Home />}/>           
         <Route path="/inscription" element={<SignUpForm/>}/>
-        <Route path="/profile" element={<Profile/>}/>            
+        <Route path="/profile" element={<Profile/>}/>   
+        <Route path="/login" element={<Login/>}/>       
       </Routes>
       <Footer />
     </BrowserRouter>

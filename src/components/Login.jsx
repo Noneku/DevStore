@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import axios from 'axios';
 
+
 export const loginSchema = Yup.object().shape({
     username: Yup.string()
       .required('Username is required'),
@@ -21,9 +22,16 @@ export const loginSchema = Yup.object().shape({
     const handleSubmit = async (values) => {
       try {
         const response = await axios.post('https://fakestoreapi.com/auth/login', values);
-        if(response.data.status === 'success') {
-          alert('Logged in successfully');
-          // Ici, vous pouvez rediriger l'utilisateur ou stocker le token dans le localStorage.
+
+        // Si la réponse contient un token, considérez cela comme un succès.
+        if (response.data.token) {
+            alert('Logged in successfully');
+            // Vous pouvez stocker le token dans le localStorage ici.
+            localStorage.setItem('authToken', response.data.token);
+            // Et rediriger l'utilisateur vers la page d'accueil ou le tableau de bord.
+        } else {
+            // Si la réponse ne contient pas de token, considérez cela comme une erreur.
+            throw new Error('Login failed');
         }
       } catch (error) {
         alert('Login failed. Please check your credentials.');

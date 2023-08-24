@@ -235,9 +235,9 @@ export function Header() {
   const [searchValue,setSearchValue] = useState("");
   const [products,setProducts] = useState([]);
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
-  // const Navigate=useNavigate()
-  const [posts, setPosts] = useState([]); // État pour stocker les données de l'API
-  const [loading, setLoading] = useState(true); //État pour gérer le chargement des données
+  const Navigate=useNavigate()
+  // const [posts, setPosts] = useState([]); // État pour stocker les données de l'API
+  // const [loading, setLoading] = useState(true); //État pour gérer le chargement des données
 
   React.useEffect(() => {
     window.addEventListener(
@@ -253,10 +253,13 @@ export function Header() {
     setSearchValue(e.target.value)
 
   }
-  //  const handleProductClick=(product)=>{
-  //   Navigate()
-  //   setSearchValue("")
-  //  }
+  const handleProductClick = (product) => {
+    // Assurez-vous que product.id est une chaîne, car il sera utilisé dans l'URL.
+    const productId = String(product.id);
+    Navigate(`/product/${productId}`);
+    setSearchValue("");
+  }
+  
   useEffect(() => {
     if (searchValue !== "") {
         axios.get('https://fakestoreapi.com/products')
@@ -272,9 +275,7 @@ export function Header() {
         setProducts([]);
     }
   }, [searchValue]);
-  //     if (loading) {
-  //   return <div>Chargement en cours...</div>;
-  // }
+
   const filteredCategories = products?.filter((product) =>
   product.title.toLowerCase().includes(searchValue.toLowerCase()));
 
@@ -286,7 +287,9 @@ export function Header() {
           href="#"
           className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
         >
-          DevStore
+           <NavLink  to="/">
+            Devstor
+            </NavLink>
         </Typography>
         <div className="relative flex w-full gap-2 md:w-max">
         <Input value={searchValue} onChange={handleChange}
@@ -300,11 +303,11 @@ export function Header() {
         />
            {searchValue !== '' && (
             <ul className="suggestions absolute top-12 bg-gray-100">
-              {console.log(filteredCategories)}
+              {/* {console.log(filteredCategories)} */}
             {filteredCategories
             .map((product, index) => (
               <li key={index} 
-              // onClick={() => handleProductClick(product)}
+              onClick={() => handleProductClick(product)}
               >
                 {product.title}
               </li>

@@ -245,10 +245,10 @@ export function Header() {
     setSearchValue(e.target.value)
 
   }
-  //  const handleCategoryClick=(category)=>{
-  //   Navigate()
-  //   setSearchValue("")
-  //  }
+   const handleProductClick=(product)=>{
+    Navigate()
+    setSearchValue("")
+   }
   useEffect(() => {
     if (searchValue !== "") {
         axios.get('https://fakestoreapi.com/products')
@@ -264,9 +264,9 @@ export function Header() {
         setProducts([]);
     }
   }, [searchValue]);
-  //     if (loading) {
-  //   return <div>Chargement en cours...</div>;
-  // }
+      if (loading) {
+    return <div>Chargement en cours...</div>;
+  }
   const filteredCategories = products?.filter((product) =>
   product.title.toLowerCase().includes(searchValue.toLowerCase()));
 
@@ -296,7 +296,7 @@ export function Header() {
             {filteredCategories
             .map((product, index) => (
               <li key={index} 
-              // onClick={() => handleCategoryClick(product)}
+              onClick={() => handleProductClick(product)}
               >
                 {product.title}
               </li>

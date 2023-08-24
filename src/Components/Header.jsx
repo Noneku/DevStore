@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect} from "react";
 // import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 import {
   Navbar,
   Collapse,
@@ -118,27 +119,30 @@ function ProfileMenu() {
 // nav list menu
 const navListMenuItems = [
   {
-    title: "@material-tailwind/html",
+    title: "Se connecter",
     description:
-      "Learn how to use @material-tailwind/html, packed with rich components and widgets.",
+      "Je me connecte ici.",
+      route: "/connexion"
   },
   {
-    title: "@material-tailwind/react",
+    title: "Inscription",
     description:
-      "Learn how to use @material-tailwind/react, packed with rich components for React.",
+      "Je m'inscris ici.",
+      route: "/inscription"
   },
   {
-    title: "Material Tailwind PRO",
+    title: "Mon panier.",
     description:
-      "A complete set of UI Elements for building faster websites in less time.",
-  },
+      "Je consulte mon panier.",
+      route: "/panier"
+  }
 ];
 
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const renderItems = navListMenuItems.map(({ title, description }) => (
-    <a href="#" key={title}>
+  const renderItems = navListMenuItems.map(({ title, description, route }) => (
+    <NavLink to={route} key={title}>
       <MenuItem>
         <Typography variant="h6" color="blue-gray" className="mb-1">
           {title}
@@ -147,7 +151,7 @@ function NavListMenu() {
           {description}
         </Typography>
       </MenuItem>
-    </a>
+    </NavLink>
   ));
 
   return (
@@ -195,6 +199,7 @@ const navListItems = [
   {
     label: "Account",
     icon: UserCircleIcon,
+    route: "/profile"
   }
 ];
 
@@ -202,8 +207,9 @@ function NavList() {
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       <NavListMenu />
-      {navListItems.map(({ label, icon }, key) => (
-        <Typography
+      {navListItems.map(({ label, icon, route }, key) => (
+        <NavLink to={route}>
+          <Typography
           key={label}
           as="a"
           href="#"
@@ -215,7 +221,9 @@ function NavList() {
             {React.createElement(icon, { className: "h-[18px] w-[18px]" })}{" "}
             {label}
           </MenuItem>
-        </Typography>
+          </Typography>
+        </NavLink>
+        
       ))}
     </ul>
   );

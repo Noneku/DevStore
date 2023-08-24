@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect} from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import {
@@ -253,10 +253,10 @@ export function Header() {
     setSearchValue(e.target.value)
 
   }
-   const handleProductClick=(product)=>{
-    Navigate()
-    setSearchValue("")
-   }
+  //  const handleProductClick=(product)=>{
+  //   Navigate()
+  //   setSearchValue("")
+  //  }
   useEffect(() => {
     if (searchValue !== "") {
         axios.get('https://fakestoreapi.com/products')
@@ -272,9 +272,9 @@ export function Header() {
         setProducts([]);
     }
   }, [searchValue]);
-      if (loading) {
-    return <div>Chargement en cours...</div>;
-  }
+  //     if (loading) {
+  //   return <div>Chargement en cours...</div>;
+  // }
   const filteredCategories = products?.filter((product) =>
   product.title.toLowerCase().includes(searchValue.toLowerCase()));
 
@@ -304,7 +304,7 @@ export function Header() {
             {filteredCategories
             .map((product, index) => (
               <li key={index} 
-              onClick={() => handleProductClick(product)}
+              // onClick={() => handleProductClick(product)}
               >
                 {product.title}
               </li>

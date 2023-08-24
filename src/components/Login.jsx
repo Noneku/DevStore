@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import axios from 'axios';
-
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const loginSchema = Yup.object().shape({
     username: Yup.string()
@@ -19,6 +19,7 @@ export const loginSchema = Yup.object().shape({
     button: 'bg-blue-500 p-2 rounded',
     forgotPassword: 'text-blue-500'}
   }) => {
+    const navigate = useNavigate();
     const handleSubmit = async (values) => {
       try {
         const response = await axios.post('https://fakestoreapi.com/auth/login', values);
@@ -29,6 +30,7 @@ export const loginSchema = Yup.object().shape({
             // Vous pouvez stocker le token dans le localStorage ici.
             localStorage.setItem('authToken', response.data.token);
             // Et rediriger l'utilisateur vers la page d'accueil ou le tableau de bord.
+            navigate('/#');
         } else {
             // Si la réponse ne contient pas de token, considérez cela comme une erreur.
             throw new Error('Login failed');
@@ -52,6 +54,7 @@ export const loginSchema = Yup.object().shape({
       };
     
       return (
+        
         <Formik
           initialValues={{
             username: '',

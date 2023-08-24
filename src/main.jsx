@@ -9,6 +9,7 @@ import { Home } from './Components/Home.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Profile from './components/Profile.jsx'
 import Login from './components/Login'
+// import Cart from './components/Cart'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
@@ -17,7 +18,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route exact path="/" element={<Home />}/>           
         <Route path="/inscription" element={<SignUpForm/>}/>
         <Route path="/profile" element={<Profile/>}/>   
-        <Route path="/login" element={<Login/>}/>       
+        <Route path="/login" element={<Login/>}/> 
+        {/* <Route path="/cart" element={<Cart/>}/>       */}
       </Routes>
       <Footer />
     </BrowserRouter>

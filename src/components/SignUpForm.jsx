@@ -68,18 +68,14 @@ const initialValues = {
 };
 // AXIOS POST
 
-const handleSubmit = (values) => {
+const handleSubmit = async (values) => {
 
-  console.table(values);
-
-  const userJson = JSON.stringify(values);
-
-  axios
-      .put(``, { userJson })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-  });
+  try {
+    const res = await axios.post('https://fakestoreapi.com/users', { values });
+    console.log(res.data);
+  } catch (error) {
+    console.error('Erreur lors de la requête :', error);
+  }
 }
 
   return (

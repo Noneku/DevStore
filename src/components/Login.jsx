@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, Redirect} from 'react';
 import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import axios from 'axios';
-
+import { useNavigation } from 'react-router-dom';
 
 export const loginSchema = Yup.object().shape({
     username: Yup.string()
@@ -28,13 +28,13 @@ export const loginSchema = Yup.object().shape({
             alert('Logged in successfully');
             // Vous pouvez stocker le token dans le localStorage ici.
             localStorage.setItem('authToken', response.data.token);
-            // Et rediriger l'utilisateur vers la page d'accueil ou le tableau de bord.
         } else {
             // Si la réponse ne contient pas de token, considérez cela comme une erreur.
             throw new Error('Login failed');
         }
       } catch (error) {
         alert('Login failed. Please check your credentials.');
+        // console.log(error)
       }
     };
   

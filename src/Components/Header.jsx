@@ -31,6 +31,8 @@ import {
   Bars2Icon,
 } from "@heroicons/react/24/outline";
 
+import jwtDecode from "jwt-decode";
+
 // profile menu component
 const profileMenuItems = [
   {
@@ -234,32 +236,37 @@ export function Header() {
   const [products,setProducts] = useState([]);
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
 
-  const Navigate=useNavigate()
+  const Navigate = useNavigate()
   // const [posts, setPosts] = useState([]); // État pour stocker les données de l'API
   // const [loading, setLoading] = useState(true); //État pour gérer le chargement des données
-const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   React.useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
-
+    
+    //TOKEN Traitement
     const token = localStorage.getItem('authToken');
+    let decode = jwtDecode(token);
+
+    console.log(decode);
 
     if(token){
       setIsAuthenticated(true);
+
     }
 
   }, []);
 
-
   const handleChange = (e) =>{
     console.log(e.target.value);
   
-    setSearchValue(e.target.value)
+    setSearchValue(e.target.value);
 
   }
+  
   const handleProductClick = (product) => {
     // Assurez-vous que product.id est une chaîne, car il sera utilisé dans l'URL.
     const productId = String(product.id);
@@ -300,9 +307,9 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
           </Typography>
         ) : (
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
-            <NavLink to="/"key="">Devstor</NavLink>
+            Je suis deconnecté
           </Typography>
-        )}
+        )};
   
         <div className="relative flex w-full gap-2 md:w-max">
           <Input
@@ -317,7 +324,7 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
           />
           {searchValue !== '' && (
             <ul className="suggestions absolute top-12 bg-gray-100">
-              {filteredCategories.map((product, index) => (
+              {filteredCategories.map((product, index) => ( 
                 <li
                   key={index}
                   onClick={() => handleProductClick(product)}
@@ -330,10 +337,9 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
           <Button size="sm" className="absolute right-1 top-1 rounded">
             Search
           </Button>
-        </div>
-  
-        <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+        </div> 
           <NavList />
+        <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
         </div>
         <IconButton
           size="sm"

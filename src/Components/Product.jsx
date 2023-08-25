@@ -5,7 +5,7 @@ import axios from 'axios';
 const Product = () => {
   const { id } = useParams(); // Utilisez useParams pour obtenir le paramètre "id" de l'URL
 
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]); 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

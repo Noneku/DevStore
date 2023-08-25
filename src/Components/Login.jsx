@@ -4,7 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import axios from 'axios';
 import { useNavigation } from 'react-router-dom'; 
 
-export const loginSchema = Yup.object().shape({
+export const loginSchema = Yup.object().shape({ 
     username: Yup.string()
       .required('Username is required'),
     password: Yup.string()

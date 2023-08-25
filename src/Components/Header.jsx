@@ -319,7 +319,7 @@ export function Header() {
           />
           {searchValue !== '' && (
             <ul className="suggestions absolute top-12 bg-gray-100">
-              {filteredCategories.map((product, index) => (
+              {filteredCategories.map((product, index) => ( 
                 <li
                   key={index}
                   onClick={() => handleProductClick(product)}

@@ -6,7 +6,7 @@ import {
   Input,
   Checkbox,
   Button,
-  Typography,
+  Typography, 
 } from "@material-tailwind/react";
 import axios from "axios";
 import { Link } from "react-router-dom";

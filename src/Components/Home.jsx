@@ -67,7 +67,7 @@ export function Home() {
           {posts.map((post) => (
             <li key={post.id} className="text-sm">
               <div className="flex flex-col justify-between text-center items-center h-full w-full">
-                <img src={post.image} alt={post.title} className="w-1/2" />
+                <img src={post.image} alt={post.title} className="w-1/2" /> 
                 {post.title}
               </div>
             </li>

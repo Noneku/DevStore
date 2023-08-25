@@ -1,6 +1,6 @@
 import React from "react";
 import { ErrorMessage, Field, Formik, Form } from "formik";
-import * as Yup from 'yup';
+import * as Yup from 'yup'; 
 import {
   Card,
   Input,

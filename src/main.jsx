@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 // import App from './App.jsx'
 import './index.css'
-import SignUpForm from './components/SignUpForm.jsx'
 import { Footer } from './Components/Footer.jsx'
 import {Header} from './Components/Header.jsx'
 import { Home } from './Components/Home.jsx'
@@ -11,6 +10,8 @@ import Profile from './Components/Profile.jsx'
 import Login from './Components/Login'
 import Product from './Components/Product'
 import Category from './Components/Category'
+import SignUpForm from './Components/SignUpForm'
+
 ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Header />

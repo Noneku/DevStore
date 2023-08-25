@@ -299,13 +299,13 @@ export function Header() {
         
         {isAuthenticated ? (
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
-            Bonjour, {userName}
+            Bonjour, <strong class="font-semibold text-gray-900 dark:text-white">{userName}</strong> 
           </Typography>
         ) : (
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
             Je suis deconnecté
           </Typography>
-        )};
+        )}
   
         <div className="relative flex w-full gap-2 md:w-max">
           <Input

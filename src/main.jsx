@@ -8,7 +8,7 @@ import {Header} from './components/Header.jsx'
 import { Home } from './components/Home.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Profile from './Components/Profile.jsx'
-import Login from './Components/Login'
+import Login from './components/Login'
 import Product from './Components/Product'
 import Category from './Components/Category'
 ReactDOM.createRoot(document.getElementById('root')).render(

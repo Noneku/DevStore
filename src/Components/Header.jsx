@@ -289,13 +289,18 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
   return (
     <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6 bg-orange-500">
       <div className="relative mx-auto flex items-center text-blue-gray-900">
+      
+          <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
+            <NavLink to="/"key=""><img src="src/assets/images/logo_devstore.jpg" alt="logo" className="h-px w-px z-50" /></NavLink>
+          </Typography>
+        
         {isAuthenticated ? (
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
             Je suis connecté
           </Typography>
         ) : (
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
-            <NavLink to="/"key=""><img src="src\assets\images\logo_devstore.jpg" alt="" /></NavLink>
+            <NavLink to="/"key="">Devstor</NavLink>
           </Typography>
         )}
   

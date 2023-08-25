@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { ErrorMessage, Field, Formik, Form } from "formik";
-import * as Yup from 'yup';
+import * as Yup from 'yup'; 
 import {
   Card,
   Input,
   Checkbox,
   Button,
-  Typography,
+  Typography, 
 } from "@material-tailwind/react";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -68,18 +68,14 @@ const initialValues = {
 };
 // AXIOS POST
 
-const handleSubmit = (values) => {
+const handleSubmit = async (values) => {
 
-  console.table(values);
-
-  const userJson = JSON.stringify(values);
-
-  axios
-      .put(``, { userJson })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-  });
+  try {
+    const res = await axios.post('https://fakestoreapi.com/users', { values });
+    console.log(res.data);
+  } catch (error) {
+    console.error('Erreur lors de la requête :', error);
+  }
 }
 
   return (

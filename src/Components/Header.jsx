@@ -31,6 +31,8 @@ import {
   Bars2Icon,
 } from "@heroicons/react/24/outline";
 
+import jwtDecode from "jwt-decode";
+
 // profile menu component
 const profileMenuItems = [
   {
@@ -207,12 +209,10 @@ function NavList() {
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
       <NavListMenu />
-      {navListItems.map(({ label, icon, route }, key) => (
-        <NavLink to={route}>
+      {navListItems.map(({ label, icon, route },index) => (
+        <NavLink to={route} key={index}>
           <Typography
           key={label}
-          as="a"
-          href="#"
           variant="small"
           color="blue-gray"
           className="font-normal"
@@ -235,28 +235,45 @@ export function Header() {
   const [searchValue,setSearchValue] = useState("");
   const [products,setProducts] = useState([]);
   const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
-  // const Navigate=useNavigate()
-  const [posts, setPosts] = useState([]); // État pour stocker les données de l'API
-  const [loading, setLoading] = useState(true); //État pour gérer le chargement des données
+
+  const Navigate = useNavigate()
+  // const [posts, setPosts] = useState([]); // État pour stocker les données de l'API
+  // const [loading, setLoading] = useState(true); //État pour gérer le chargement des données
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   React.useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
-  }, []);
+    
+    //TOKEN Traitement
+    const token = localStorage.getItem('authToken');
+    let decode = jwtDecode(token);
 
+    console.log(decode);
+
+    if(token){
+      setIsAuthenticated(true);
+
+    }
+
+  }, []);
 
   const handleChange = (e) =>{
     console.log(e.target.value);
   
-    setSearchValue(e.target.value)
+    setSearchValue(e.target.value);
 
   }
-  //  const handleProductClick=(product)=>{
-  //   Navigate()
-  //   setSearchValue("")
-  //  }
+  
+  const handleProductClick = (product) => {
+    // Assurez-vous que product.id est une chaîne, car il sera utilisé dans l'URL.
+    const productId = String(product.id);
+    Navigate(`/product/${productId}`);
+    setSearchValue("");
+  }
+  
   useEffect(() => {
     if (searchValue !== "") {
         axios.get('https://fakestoreapi.com/products')
@@ -272,52 +289,52 @@ export function Header() {
         setProducts([]);
     }
   }, [searchValue]);
-  //     if (loading) {
-  //   return <div>Chargement en cours...</div>;
-  // }
+
   const filteredCategories = products?.filter((product) =>
   product.title.toLowerCase().includes(searchValue.toLowerCase()));
 
   return (
     <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6 bg-orange-500">
       <div className="relative mx-auto flex items-center text-blue-gray-900">
-        <Typography
-          as="a"
-          href="#"
-          className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
-        >
-          DevStore
-        </Typography>
+        {isAuthenticated ? (
+          <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
+            Je suis connecté
+          </Typography>
+        ) : (
+          <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
+            Je suis deconnecté
+          </Typography>
+        )};
+  
         <div className="relative flex w-full gap-2 md:w-max">
-        <Input value={searchValue} onChange={handleChange}
-          type="search"
-          label="Type here..."
-          className="pr-20"
-          containerProps={{
-            className: "min-w-[288px]",
-          }}
-       
-        />
-           {searchValue !== '' && (
+          <Input
+            value={searchValue}
+            onChange={handleChange}
+            type="search"
+            label="Type here..."
+            className="pr-20"
+            containerProps={{
+              className: "min-w-[288px]",
+            }}
+          />
+          {searchValue !== '' && (
             <ul className="suggestions absolute top-12 bg-gray-100">
-              {console.log(filteredCategories)}
-            {filteredCategories
-            .map((product, index) => (
-              <li key={index} 
-              // onClick={() => handleProductClick(product)}
-              >
-                {product.title}
-              </li>
-            ))}
-
-          </ul>
-        )}
-        <Button size="sm" className="!absolute right-1 top-1 rounded">
-          Search
-        </Button>
-      </div>
-        <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
+              {filteredCategories.map((product, index) => ( 
+                <li
+                  key={index}
+                  onClick={() => handleProductClick(product)}
+                >
+                  {product.title}
+                </li>
+              ))}
+            </ul>
+          )}
+          <Button size="sm" className="absolute right-1 top-1 rounded">
+            Search
+          </Button>
+        </div> 
           <NavList />
+        <div className="absolute top-2/4 left-2/4 hidden -translate-x-2/4 -translate-y-2/4 lg:block">
         </div>
         <IconButton
           size="sm"
@@ -330,10 +347,10 @@ export function Header() {
         </IconButton>
         <ProfileMenu />
       </div>
-     
+  
       <Collapse open={isNavOpen} className="overflow-scroll">
         <NavList />
       </Collapse>
     </Navbar>
   );
-}
+              }  

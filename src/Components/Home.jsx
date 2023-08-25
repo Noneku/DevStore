@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom"; // Importer Link depuis React Router
 
 const baseURL = "https://fakestoreapi.com/products";
 // Créez un objet pour stocker les images de chaque catégorie
@@ -51,9 +52,11 @@ export function Home() {
         <ul className="flex justify-between text-center items-center h-full w-full">
           {Object.entries(categoryImages).map(([category, image]) => (
             <li key={category} className="text-sm ">
-              <div className="flex flex-col justify-between text-center items-center h-full w-full">
-              <img src={image} alt={category} className="w-1/2" /> {category}
-              </div>
+              <Link to={`/category/${category}`}> {/* Utilisez Link pour créer un lien vers la catégorie */}
+                <div className="flex flex-col justify-between text-center items-center h-full w-full">
+                  <img src={image} alt={category} className="w-1/2" /> {category}
+                </div>
+              </Link>
             </li>
           ))}
         </ul>
@@ -64,7 +67,7 @@ export function Home() {
           {posts.map((post) => (
             <li key={post.id} className="text-sm">
               <div className="flex flex-col justify-between text-center items-center h-full w-full">
-                <img src={post.image} alt={post.title} className="w-1/2" />
+                <img src={post.image} alt={post.title} className="w-1/2" /> 
                 {post.title}
               </div>
             </li>

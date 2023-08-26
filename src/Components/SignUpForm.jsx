@@ -9,9 +9,11 @@ import {
   Typography, 
 } from "@material-tailwind/react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
+
+  const navigate = useNavigate();
 
 const validationSchema = Yup.object().shape({
   nom: Yup.string()
@@ -73,26 +75,25 @@ const handleSubmit = async (values) => {
   try {
     const res = await axios.post('https://fakestoreapi.com/users', { values });
     console.log(res.data);
+
+    //Redirection si OK
+    navigate('/login');
+
+    alert("Votre compte à bien été crée !");
   } catch (error) {
     console.error('Erreur lors de la requête :', error);
   }
 }
 
   return (
-    <Card color="transparent" shadow={false}>
-      <Typography variant="h4" color="blue-gray">
-        S'inscrire
-      </Typography>
-      <Typography color="gray" className="mt-1 font-normal">
-        Entrez vos détails pour vous inscrire.
-      </Typography>
+    <Card color="transparent" shadow={false} className="flex flex-col items-center">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
-          <Form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+          <Form className="mt-8 mb-2 max-w-screen-lg sm:w-96">
             <div className="mb-4 flex flex-col gap-6">
               <Field type="text" name="nom">
                 {({ field }) => (
@@ -188,7 +189,7 @@ const handleSubmit = async (values) => {
               </Field>             
               <ErrorMessage name="agreeTerms" component="div" className="text-red-500" />
             </div>
-            <Button type="submit" className="mt-6" fullWidth disabled={isSubmitting}>
+            <Button type="submit" className="mt-6 bg-none" fullWidth disabled={isSubmitting}>
               S'inscrire
             </Button>
             <Typography color="gray" className="mt-4 text-center font-normal">

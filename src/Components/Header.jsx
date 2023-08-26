@@ -3,6 +3,7 @@ import { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import logo from "../assets/DEV Store.jpg";
 import {
   Navbar,
   Collapse,
@@ -292,6 +293,7 @@ export function Header() {
   return (
     <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6 bg-orange-500">
       <div className="relative mx-auto flex items-center text-blue-gray-900">
+        <img src={logo} alt="" className="h-20 w-20" />
       
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
             <NavLink to="/"key=""><img src="src/assets/images/logo_devstore.jpg" alt="logo" className="h-px w-px z-50" /></NavLink>

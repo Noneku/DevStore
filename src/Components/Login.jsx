@@ -19,22 +19,19 @@ export const loginSchema = Yup.object().shape({
     button: 'bg-blue-500 p-2 rounded',
     forgotPassword: 'text-blue-500'}
   }) => {
+    
     const handleSubmit = async (values) => {
       try {
         const response = await axios.post('https://fakestoreapi.com/auth/login', values);
 
-        // Si la réponse contient un token, considérez cela comme un succès.
         if (response.data.token) {
             alert('Logged in successfully');
-            // Vous pouvez stocker le token dans le localStorage ici.
             localStorage.setItem('authToken', response.data.token);
         } else {
-            // Si la réponse ne contient pas de token, considérez cela comme une erreur.
             throw new Error('Login failed');
         }
       } catch (error) {
         alert('Login failed. Please check your credentials.');
-        // console.log(error)
       }
     };
   

@@ -31,6 +31,7 @@ import {
   RocketLaunchIcon,
   Bars2Icon,
 } from "@heroicons/react/24/outline";
+import AuthUser from "./utils/AuthUser";
 
 // profile menu component
 const profileMenuItems = [
@@ -238,7 +239,6 @@ export function Header() {
   const Navigate = useNavigate()
   // const [posts, setPosts] = useState([]); // État pour stocker les données de l'API
   // const [loading, setLoading] = useState(true); //État pour gérer le chargement des données
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setIUserName] = useState('');
 
   React.useEffect(() => {
@@ -246,14 +246,6 @@ export function Header() {
       "resize",
       () => window.innerWidth >= 960 && setIsNavOpen(false)
     );
-    
-    const token = localStorage.getItem('authToken');
-    //TOKEN Traitement
-    if(token){
-      setIsAuthenticated(true);
-      const object = JSON.parse(atob(token.split('.')[1]))
-      setIUserName(object.user);
-    }
 
   }, []);
 
@@ -293,22 +285,8 @@ export function Header() {
   return (
     <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6 bg-orange-500">
       <div className="relative mx-auto flex items-center text-blue-gray-900">
-        <img src={logo} alt="" className="h-20 w-20" />
-      
-          <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
-            <NavLink to="/"key=""><img src="src/assets/images/logo_devstore.jpg" alt="logo" className="h-px w-px z-50" /></NavLink>
-          </Typography>
-        
-        {isAuthenticated ? (
-          <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
-            Bonjour, <strong className="font-semibold text-gray-900 dark:text-white">{userName}</strong> 
-          </Typography>
-        ) : (
-          <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
-            Je suis deconnecté
-          </Typography>
-        )}
-  
+      <img src={logo} alt="" className="h-20 w-20 mr-4" />              
+      <AuthUser/>
         <div className="relative flex w-full gap-2 md:w-max">
           <Input
             value={searchValue}

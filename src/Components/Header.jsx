@@ -249,6 +249,7 @@ export function Header() {
 
     if(token){
       setIsAuthenticated(true);
+      
     }
 
   }, []);
@@ -294,7 +295,7 @@ export function Header() {
               as="a"
               className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
             >
-            Je suis connecté
+            Bonjour,kjdk
           </Typography>
         ) : (
           <Typography

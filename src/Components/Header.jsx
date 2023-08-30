@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/DEV Store.jpg";
+import { navListMenuItems} from "./utils/navListMenuItems";
+import { profileMenuItems, navListItems} from "./utils/profileMenuItems";
+import AuthUser from "./utils/AuthUser";
 import {
   Navbar,
   Collapse,
@@ -18,50 +21,31 @@ import {
   IconButton,
   Input,
 } from "@material-tailwind/react";
+
 import {
-  CubeTransparentIcon,
-  UserCircleIcon,
-  CodeBracketSquareIcon,
   Square3Stack3DIcon,
   ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
-  LifebuoyIcon,
-  PowerIcon,
   RocketLaunchIcon,
   Bars2Icon,
 } from "@heroicons/react/24/outline";
-import AuthUser from "./utils/AuthUser";
 
-// profile menu component
-const profileMenuItems = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-  },
-  {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-  },
-  {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
-  },
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-  },
-];
+
+export function Header() {
+
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [searchValue,setSearchValue] = useState("");
+  const [products,setProducts] = useState([]);
+  const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
+
+  const Navigate = useNavigate()
+
+
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
+  
   const closeMenu = () => setIsMenuOpen(false);
-
+  
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -117,28 +101,6 @@ function ProfileMenu() {
     </Menu>
   );
 }
-
-// nav list menu
-const navListMenuItems = [
-  {
-    title: "Se connecter",
-    description:
-      "Je me connecte ici.",
-      route: "/login"
-  },
-  {
-    title: "Inscription",
-    description:
-      "Je m'inscris ici.",
-      route: "/inscription"
-  },
-  {
-    title: "Mon panier.",
-    description:
-      "Je consulte mon panier.",
-      route: "/panier"
-  }
-];
 
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -196,15 +158,6 @@ function NavListMenu() {
   );
 }
 
-// nav list component
-const navListItems = [
-  {
-    label: "Account",
-    icon: UserCircleIcon,
-    route: "/profile"
-  }
-];
-
 function NavList() {
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
@@ -222,26 +175,16 @@ function NavList() {
             {label}
           </MenuItem>
           </Typography>
-        </NavLink>
-        
+        </NavLink>       
       ))}
     </ul>
   );
 }
 // const baseURL = "https://fakestoreapi.com/products/category";
 
-export function Header() {
-  const [isNavOpen, setIsNavOpen] = React.useState(false);
-  const [searchValue,setSearchValue] = useState("");
-  const [products,setProducts] = useState([]);
-  const toggleIsNavOpen = () => setIsNavOpen((cur) => !cur);
 
-  const Navigate = useNavigate()
-  // const [posts, setPosts] = useState([]); // État pour stocker les données de l'API
-  // const [loading, setLoading] = useState(true); //État pour gérer le chargement des données
-  const [userName, setIUserName] = useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setIsNavOpen(false)
@@ -286,7 +229,8 @@ export function Header() {
     <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6 bg-orange-500">
       <div className="relative mx-auto flex items-center text-blue-gray-900">
       <img src={logo} alt="" className="h-20 w-20 mr-4" />              
-      <AuthUser/>
+      {/* <AuthUser isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/> */}
+      {/* {isAuthenticated && } */}
         <div className="relative flex w-full gap-2 md:w-max">
           <Input
             value={searchValue}

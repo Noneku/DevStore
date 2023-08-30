@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Typography } from "@material-tailwind/react";
 import jwtDecode from 'jwt-decode';
+import { NavLink } from 'react-router-dom';
 
-function AuthUser() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+function AuthUser({isAuthenticated,setIsAuthenticated}) {
+
   const TokenUser = localStorage.getItem('authToken');
   let decodedToken = null;
 
   if(isAuthenticated){
     const token = TokenUser;
     decodedToken = jwtDecode(token);
-  }
 
+  }
+  
   useEffect(() => { 
     TokenUser && setIsAuthenticated(true);
-  
-  }, [TokenUser, isAuthenticated]); //On passe des dépendances à useEffect car on lui signal que l'état du composant peut changer
+    
+  }, [TokenUser, setIsAuthenticated]); //On passe des dépendances à useEffect car on lui signal que l'état du composant peut changer
 
   return (
     isAuthenticated ? (
@@ -24,7 +26,8 @@ function AuthUser() {
       </Typography>
     ) 
     : null
-  );    
-}
+    );
+
+  }
 
 export default AuthUser;

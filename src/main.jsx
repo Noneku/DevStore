@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom'; 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import jwtDecode from 'jwt-decode'; // Assurez-vous que cette dépendance est correctement importée.
+import jwtDecode from 'jwt-decode';
 import './index.css';
-import { Footer } from './Components/Footer';
-import { Header } from './Components/Header';
-import { Home } from './Components/Home';
-import Profile from './Components/Profile';
-import Login from './Components/Login';
-import Product from './Components/Product';
-import Category from './Components/Category';
-import SignUpForm from './Components/SignUpForm';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
+import { Home } from './components/Home';
+import Profile from './components/Profile';
+import Login from './components/Login';
+import Product from './components/Product';
+import Category from './components/Category';
+import SignUpForm from './components/SignUpForm';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -28,14 +28,14 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header />
+      <Header isAuthenticated={isAuthenticated} decodedToken={decodedToken} />
       <Routes>
         {!isAuthenticated ? (
           <>
             <Route exact path="/" element={<Home />} />
             <Route path="/inscription" element={<SignUpForm />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/profile" element={<Login/>} />
+            <Route path="/profile" element={<Login />} />
           </>
         ) : (
           <>
@@ -53,4 +53,4 @@ function App() {
   );
 }
 
-createRoot(document.getElementById('root')).render(<App />);
+ReactDOM.render(<App />, document.getElementById('root'));

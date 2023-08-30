@@ -3,6 +3,13 @@ import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import axios from 'axios';
 import { useNavigation } from 'react-router-dom'; 
+import {
+  Card,
+  Input,
+  Checkbox,
+  Button,
+  Typography, 
+} from "@material-tailwind/react";
 
 export const loginSchema = Yup.object().shape({ 
     username: Yup.string()
@@ -49,49 +56,67 @@ export const loginSchema = Yup.object().shape({
       };
     
       return (
-        <Formik
-          initialValues={{
-            username: '',
-            password: '',
-          }}
-          validationSchema={loginSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ values }) => (
-            <Form>
-              <label className={styles.label} htmlFor='username'>
-                Username
-              </label>
-              <Field className={styles.field} id='username' name='username' />
-              <ErrorMessage component='a' className={styles.errorMsg} name='username' />
-    
-              <label className={styles.label} htmlFor='password'>
-                Password
-              </label>
-              <Field className={styles.field} id='password' name='password' type="password" />
-              <ErrorMessage component='a' className={styles.errorMsg} name='password' />
-    
-              <div className='mt-8'>
-                <button type='submit' className={styles.button}>
-                  Login
-                </button>
-              </div>
-    
-              {/* Lien pour la réinitialisation du mot de passe */}
-              <div className="mt-4">
-                <button 
-                  type="button" 
-                  className={styles.forgotPassword}
-                  onClick={() => handleForgotPassword(values.username)}
-                >
-                  Forgot Password?
-                </button>
-              </div>
-    
-            </Form>
-          )}
-        </Formik>
-      );
+        <Card color="transparent" shadow={false} className="flex flex-col items-center">
+      <Formik
+        initialValues={{
+          username: '', // Valeurs initiales vides
+          password: '',
+        }}
+        validationSchema={loginSchema} // Utilisation du schéma de validation
+        onSubmit={handleSubmit} // Gestionnaire de soumission personnalisé
+      >
+        {({ isSubmitting }) => (
+          <Form className="mt-8 mb-2 max-w-screen-lg sm:w-96">
+            <div className="mb-4 flex flex-col gap-6">
+              <Field type="text" name="username">
+                {({ field }) => (
+                  <Input
+                    {...field}
+                    size="lg"
+                    label="Username"
+                    className={styles.field} // Classe CSS personnalisée
+                  />
+                )}
+              </Field>
+              <ErrorMessage name="username" component="div" className={styles.errorMsg} />
+
+              <Field type="password" name="password">
+                {({ field }) => (
+                  <Input
+                    {...field}
+                    size="lg"
+                    label="Password"
+                    type="password"
+                    className={styles.field} // Classe CSS personnalisée
+                  />
+                )}
+              </Field>
+              <ErrorMessage name="password" component="div" className={styles.errorMsg} />
+            </div>
+            <Button
+              type="submit"
+              className="mt6 bg-none" // Classe CSS personnalisée pour le bouton
+              fullWidth
+              disabled={isSubmitting}
+            >
+              Se connecter
+            </Button>
+            <Typography color="gray" className="mt-4 text-center font-normal">
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleForgotPassword(); // Gérer la logique de mot de passe oublié ici
+                }}
+              >
+                Mot de passe oublié ?
+              </a>
+            </Typography>
+          </Form>
+        )}
+      </Formik>
+    </Card>
+);
     }
  
 

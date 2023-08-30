@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 import logo from "../assets/DEV Store.jpg";
 import { navListMenuItems} from "./utils/navListMenuItems";
 import { profileMenuItems, navListItems} from "./utils/profileMenuItems";
-import AuthUser from "./utils/AuthUser";
 import {
   Navbar,
   Collapse,
@@ -30,7 +29,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 
-export function Header() {
+export function Header({isAuthenticated, decodedToken}) {
 
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [searchValue,setSearchValue] = useState("");
@@ -230,7 +229,11 @@ function NavList() {
       <div className="relative mx-auto flex items-center text-blue-gray-900">
       <img src={logo} alt="" className="h-20 w-20 mr-4" />              
       {/* <AuthUser isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/> */}
-      {/* {isAuthenticated && } */}
+      {isAuthenticated && 
+        <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-medium">
+        Bonjour, <strong className="font-semibold text-gray-900 dark:text-white">{decodedToken ? decodedToken.user : null}</strong> 
+      </Typography>
+      }
         <div className="relative flex w-full gap-2 md:w-max">
           <Input
             value={searchValue}

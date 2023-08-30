@@ -35,6 +35,7 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route path="/inscription" element={<SignUpForm />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Login/>} />
           </>
         ) : (
           <>

@@ -2,13 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 // import App from './App.jsx'
 import './index.css'
-import SignUpForm from './components/SignUpForm.jsx'
-import { Footer } from './components/Footer.jsx'
-import {Header} from './components/Header.jsx'
-import { Home } from './components/Home.jsx'
+import { Footer } from './Components/Footer.jsx'
+import {Header} from './Components/Header.jsx'
+import { Home } from './Components/Home.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Profile from './components/Profile.jsx'
-import Login from './components/Login'
+import Profile from './Components/Profile.jsx'
+import Login from './Components/Login'
+import Product from './Components/Product'
+import Category from './Components/Category'
+import SignUpForm from './Components/SignUpForm'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
@@ -17,7 +19,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route exact path="/" element={<Home />}/>           
         <Route path="/inscription" element={<SignUpForm/>}/>
         <Route path="/profile" element={<Profile/>}/>   
-        <Route path="/login" element={<Login/>}/>       
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/product/:id" element={<Product/>}/>
+        <Route path="/category/:category" element={<Category/>}/>       
       </Routes>
       <Footer />
     </BrowserRouter>
